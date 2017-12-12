@@ -11,6 +11,8 @@
 |
 */
 
-Route::resource('/', 'PostController');
+Route::resource('/post', 'PostController');
+
+
 
 

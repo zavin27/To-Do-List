@@ -24,7 +24,7 @@
                     <input class="form-check-input" type="checkbox" value="">
                     <h4 class="d-inline">{{$post->title}}</h4>
                     {{--<a class="btn btn-danger ml-auto" href="/" method="DELETE">Delete</a>--}}
-                    {!! Form::open(['route' => ['PostController@destroy', $post->id], 'class' => 'ml-auto']) !!}
+                    {!! Form::open(['action' => ['PostController@destroy', $post->id], 'class' => 'ml-auto']) !!}
                         {{Form::hidden('_method', 'DELETE')}}
                         {{Form::token()}}
                         {{Form::submit('delete', ['class' => 'btn btn-danger'])}}

@@ -11,7 +11,7 @@
 <body>
 <div class="container">
     <h1 class="text-primary mt-3 header text-center ">TO Do List</h1>
-    <form method="POST" action="/">
+    <form method="POST" action="/post">
         {{ csrf_field() }}
         <div class="form-group">
             <input type="text" class="form-control" placeholder="Add todo" name="title">
@@ -38,9 +38,10 @@
                 </div>
             @endforeach
         @else
-            no posts
         @endif
+
     </ul>
+    {{ $posts->links() }}
 </div>
 </body>
 </html>

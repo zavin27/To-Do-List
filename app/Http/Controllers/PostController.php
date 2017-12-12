@@ -15,8 +15,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::all();
-
+        $posts = Post::latest()->paginate(15);
         return view('welcome')->with('posts', $posts);
     }
 
@@ -42,9 +41,8 @@ class PostController extends Controller
         $post->title = $request->input('title');
         $post->save();
 
-        $posts = Post::all();
 
-        return view('welcome')->with('posts', $posts);
+        return redirect('/post');
 
     }
 

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Session;
 
 class PostController extends Controller
 {
@@ -37,10 +38,15 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
+        $this->validate($request, [
+           'NewTaskName' => 'required|min:3|max:255'
+        ]);
+
         $post = new Post();
-        $post->title = $request->input('title');
+        $post->title = $request->input('NewTaskName');
         $post->save();
 
+        Session::flash('success', 'New Task has been successfully added');
 
         return redirect('/post');
 
@@ -90,6 +96,8 @@ class PostController extends Controller
     {
         $post = Post::find($id);
         $post->delete();
+
+        Session::flash('success', 'Task has been successfully deleted');
 
         return redirect()->back();
     }

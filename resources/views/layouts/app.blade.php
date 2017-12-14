@@ -11,18 +11,48 @@
 <body>
 <div class="container">
     <h1 class="text-primary mt-3 header text-center mb-5">TO Do List</h1>
+
+    {{--Display Error Messages--}}
+
+    @if(count($errors) > 0)
+        <div class="alert alert-danger">
+            <strong>Error:</strong>
+            <ul>
+                @foreach($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+
+    @endif
+
+    {{-- Display Success Messages --}}
+
+    @if(Session::has('success'))
+        <div class="alert alert-success">
+            <strong>Success:</strong>
+            {{ Session::get('success') }}
+        </div>
+
+    @endif
+
     <form method="POST" action="/post" class="mb-3">
         {{ csrf_field() }}
+
         <div class="row">
             <div class="col-md-9">
-                <input type="text" class="form-control " placeholder="Add todo" name="title">
+                <input type="text" class="form-control " placeholder="Add a new task" name="NewTaskName">
             </div>
+
             <div class="col-md-3">
                 <input type="submit" class="btn btn-primary btn-block" value="Add Task">
             </div>
 
         </div>
     </form>
+
+    {{--Display Stored Tasks--}}
+
     <ul>
         @if(count($posts) > 0)
             @foreach($posts as $post)
@@ -41,6 +71,9 @@
         @endif
 
     </ul>
+
+    {{--Display Pagination--}}
+
     <div class="row justify-content-center">
         {{ $posts->links('vendor.pagination.bootstrap-4') }}
     </div>

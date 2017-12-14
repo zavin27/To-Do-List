@@ -12,6 +12,9 @@
 */
 
 Route::resource('/post', 'PostController');
+Route::get('/' , function(){
+    return redirect('/post');
+});
 
 
 

@@ -10,11 +10,17 @@
 </head>
 <body>
 <div class="container">
-    <h1 class="text-primary mt-3 header text-center ">TO Do List</h1>
-    <form method="POST" action="/post">
+    <h1 class="text-primary mt-3 header text-center mb-5">TO Do List</h1>
+    <form method="POST" action="/post" class="mb-3">
         {{ csrf_field() }}
-        <div class="form-group">
-            <input type="text" class="form-control" placeholder="Add todo" name="title">
+        <div class="row">
+            <div class="col-md-9">
+                <input type="text" class="form-control " placeholder="Add todo" name="title">
+            </div>
+            <div class="col-md-3">
+                <input type="submit" class="btn btn-primary btn-block" value="Add Task">
+            </div>
+
         </div>
     </form>
     <ul>
@@ -22,26 +28,24 @@
             @foreach($posts as $post)
                 <div class="d-flex flex-row m-2">
                     <input class="form-check-input" type="checkbox" value="">
-                    <h4 class="d-inline">{{$post->title}}</h4>
-                    {{--<a class="btn btn-danger ml-auto" href="/" method="DELETE">Delete</a>--}}
+                    <h4 class="d-inline pl-2">{{$post->title}}</h4>
                     {!! Form::open(['action' => ['PostController@destroy', $post->id], 'class' => 'ml-auto']) !!}
                         {{Form::hidden('_method', 'DELETE')}}
                         {{Form::token()}}
                         {{Form::submit('delete', ['class' => 'btn btn-danger'])}}
                     {!! Form::close() !!}
-                    {{--<form action="" method="POST" class="ml-auto">--}}
-                        {{--{{ method_field('DELETE') }}--}}
-                        {{--<input type="hidden" name="_token" value="{{ csrf_token() }}">--}}
-                        {{--<button type="submit" class="btn btn-danger">Delete</button>--}}
-                    {{--</form>--}}
-                    {{--'method' => 'POST'--}}
+
                 </div>
             @endforeach
         @else
         @endif
 
     </ul>
-    {{ $posts->links() }}
+    <div class="row justify-content-center">
+        {{ $posts->links('vendor.pagination.bootstrap-4') }}
+    </div>
+
+
 </div>
 </body>
 </html>

@@ -60,7 +60,7 @@ class PostController extends Controller
      */
     public function show($id)
     {
-        Log::info('Showing user profile for user: '.$id);
+
     }
 
     /**
@@ -71,19 +71,31 @@ class PostController extends Controller
      */
     public function edit($id)
     {
-        Log::info('editing user profile for user: '.$id);
+        $task = Post::find($id);
+
+        return view('edit')->with('taskUnderEdit', $task);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request $request
-     * @param  int $id
+     * @param  int $check
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request, [
+            'updatedTaskName' => 'required|min:3|max:255'
+        ]);
+
+        $task = Post::find($id);
+        $task->title = $request->input('updatedTaskName');
+        $task->save();
+
+        Session::flash('success', 'Your task has been successfully updated.');
+
+        return redirect()->route('post.index');
     }
 
     /**
